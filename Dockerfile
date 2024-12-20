@@ -7,9 +7,9 @@ RUN mvn clean install -Dmaven.test.skip=true
 FROM openjdk:17-jdk-slim
 
 # Copier le fichier .jar du répertoire target dans l'image
-COPY target/projetsante.jar projetsante-0.0.1-SNAPSHOT.jar
+COPY target/projetsante-0.0.1-SNAPSHOT.jar projetsante-0.0.1-SNAPSHOT.jar
 
-RUN mvn clean install -Dmaven.test.skip=true
 
 # Définir le point d'entrée pour l'application
 ENTRYPOINT ["java", "-jar", "projetsante-0.0.1-SNAPSHOT.jar"]
+EXPOSE 8089
