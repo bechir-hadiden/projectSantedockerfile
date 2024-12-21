@@ -15,10 +15,10 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.JoinColumn;
 
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
-@Table(name = "questions")
+//@AllArgsConstructor
+//@NoArgsConstructor
+//@Entity
+//@Table(name = "questions")
 public class Question {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
