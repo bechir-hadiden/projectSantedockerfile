@@ -26,58 +26,58 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public class SecurityConfig {
 
-	@Bean
-	public SecurityFilterChain filterChain (HttpSecurity http) throws Exception
-	{
-		http.sessionManagement( session ->
-		session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-		.csrf( csrf -> csrf.disable())
-		.cors(cors -> cors.configurationSource(new CorsConfigurationSource()
-		{
-		 @Override
-		 public CorsConfiguration getCorsConfiguration(HttpServletRequest
-		request) {
-		 CorsConfiguration cors = new CorsConfiguration();
-
-		 cors.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
-		cors.setAllowedMethods(Collections.singletonList("*"));
-		cors.setAllowedHeaders(Collections.singletonList("*"));
-		cors.setExposedHeaders(Collections.singletonList("Authorization"));
-		 return cors;
-		 }
-		 }).and()
-				
-				)
+//	@Bean
+//	public SecurityFilterChain filterChain (HttpSecurity http) throws Exception
+//	{
+//		http.sessionManagement( session ->
+//		session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//		.csrf( csrf -> csrf.disable())
+//		.cors(cors -> cors.configurationSource(new CorsConfigurationSource()
+//		{
+//		 @Override
+//		 public CorsConfiguration getCorsConfiguration(HttpServletRequest
+//		request) {
+//		 CorsConfiguration cors = new CorsConfiguration();
+//
+//		 cors.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+//		cors.setAllowedMethods(Collections.singletonList("*"));
+//		cors.setAllowedHeaders(Collections.singletonList("*"));
+//		cors.setExposedHeaders(Collections.singletonList("Authorization"));
+//		 return cors;
+//		 }
+//		 }).and()
+//				
+//				)
 		
 		
 //		.authorizeHttpRequests();
 //		.anyRequest().permitAll();
 		
 
-		 .authorizeHttpRequests( requests -> requests
-				    .requestMatchers("/api/image/**").permitAll() // Permet l'accès public pour les routes d'image
-
-		            .requestMatchers(HttpMethod.GET, "/api/image/getImages/**").hasAnyAuthority("USER", "ADMIN")
-		            .requestMatchers(HttpMethod.GET, "/api/image/loadfromFS/**").hasAnyAuthority("USER", "ADMIN")
-		            .requestMatchers(HttpMethod.GET, "/api/image/getAllImages").hasAnyAuthority("USER", "ADMIN")
-		            .requestMatchers(HttpMethod.POST, "/api/image/upload").hasAuthority("ADMIN")
-		            .requestMatchers(HttpMethod.POST, "/api/image/uploadFS/**").hasAuthority("ADMIN")
-		            .requestMatchers(HttpMethod.DELETE, "/api/image/delete/**").hasAuthority("ADMIN")
-		            
-		            .requestMatchers(HttpMethod.GET, "/api/image/sante/getImagesSante/**").hasAnyAuthority("USER", "ADMIN")
-		            .requestMatchers(HttpMethod.GET, "/api/image/sante/loadfromFSSante/**").hasAnyAuthority("USER", "ADMIN")
-		            .requestMatchers(HttpMethod.GET, "/api/image/sante/getAllImagesSante").hasAnyAuthority("USER", "ADMIN")
-		            .requestMatchers(HttpMethod.POST, "/api/image/sante/uploadSante").hasAuthority("ADMIN")
-		            .requestMatchers(HttpMethod.POST, "/api/image/sante/uploadFSSante/**").hasAuthority("ADMIN")
-		            .requestMatchers(HttpMethod.DELETE, "/api/image/sante/delete/**").hasAuthority("ADMIN")
-		
-		.requestMatchers("/ligue/**").hasAnyAuthority("ADMIN","USER")
-		.anyRequest().authenticated() )
-		.addFilterBefore(new JWTAuthorizationFilter(),
-		 UsernamePasswordAuthenticationFilter.class);
-		return http.build();
-		}
-	
+//		 .authorizeHttpRequests( requests -> requests
+//				    .requestMatchers("/api/image/**").permitAll() // Permet l'accès public pour les routes d'image
+//
+//		            .requestMatchers(HttpMethod.GET, "/api/image/getImages/**").hasAnyAuthority("USER", "ADMIN")
+//		            .requestMatchers(HttpMethod.GET, "/api/image/loadfromFS/**").hasAnyAuthority("USER", "ADMIN")
+//		            .requestMatchers(HttpMethod.GET, "/api/image/getAllImages").hasAnyAuthority("USER", "ADMIN")
+//		            .requestMatchers(HttpMethod.POST, "/api/image/upload").hasAuthority("ADMIN")
+//		            .requestMatchers(HttpMethod.POST, "/api/image/uploadFS/**").hasAuthority("ADMIN")
+//		            .requestMatchers(HttpMethod.DELETE, "/api/image/delete/**").hasAuthority("ADMIN")
+//		            
+//		            .requestMatchers(HttpMethod.GET, "/api/image/sante/getImagesSante/**").hasAnyAuthority("USER", "ADMIN")
+//		            .requestMatchers(HttpMethod.GET, "/api/image/sante/loadfromFSSante/**").hasAnyAuthority("USER", "ADMIN")
+//		            .requestMatchers(HttpMethod.GET, "/api/image/sante/getAllImagesSante").hasAnyAuthority("USER", "ADMIN")
+//		            .requestMatchers(HttpMethod.POST, "/api/image/sante/uploadSante").hasAuthority("ADMIN")
+//		            .requestMatchers(HttpMethod.POST, "/api/image/sante/uploadFSSante/**").hasAuthority("ADMIN")
+//		            .requestMatchers(HttpMethod.DELETE, "/api/image/sante/delete/**").hasAuthority("ADMIN")
+//		
+//		.requestMatchers("/ligue/**").hasAnyAuthority("ADMIN","USER"),
+//		.anyRequest().authenticated() ),
+//		.addFilterBefore(new JWTAuthorizationFilter(),
+//		 UsernamePasswordAuthenticationFilter.class);
+//		return http.build();
+//		}
+//	
 	
 	@Bean
     public CorsConfigurationSource corsConfigurationSource() {

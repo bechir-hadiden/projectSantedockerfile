@@ -24,65 +24,65 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class JWTAuthorizationFilter extends OncePerRequestFilter {
+public class JWTAuthorizationFilter {
     
-    private static final Logger logger = LoggerFactory.getLogger(JWTAuthorizationFilter.class);
-    private Algorithm algorithm;
-
-    public JWTAuthorizationFilter() {
-        try {
-            this.algorithm = Algorithm.HMAC256(SecParams.SECRET);
-        } catch (IllegalArgumentException e) {
-            logger.error("Erreur lors de l'initialisation de l'algorithme JWT", e);
-        }
-    }
-
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
-        try {
-            String jwt = request.getHeader("Authorization");
+//    private static final Logger logger = LoggerFactory.getLogger(JWTAuthorizationFilter.class);
+//    private Algorithm algorithm;
+//
+//    public JWTAuthorizationFilter() {
+//        try {
+//            this.algorithm = Algorithm.HMAC256(SecParams.SECRET);
+//        } catch (IllegalArgumentException e) {
+//            logger.error("Erreur lors de l'initialisation de l'algorithme JWT", e);
+//        }
+//    }
+//
+//    @Override
+//    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+//            throws ServletException, IOException {
+//        try {
+//            String jwt = request.getHeader("Authorization");
             
             // Si pas de token, on continue la chaîne
-            if (jwt == null || !jwt.startsWith(SecParams.PREFIX)) {
-                filterChain.doFilter(request, response);
-                return;
-            }
+//            if (jwt == null || !jwt.startsWith(SecParams.PREFIX)) {
+//                filterChain.doFilter(request, response);
+//                return;
+//            }
 
             // Vérification du token
-            JWTVerifier verifier = JWT.require(algorithm)
-                                    .build();
+//            JWTVerifier verifier = JWT.require(algorithm)
+//                                    .build();
             
             // Suppression du préfixe "Bearer "
-            jwt = jwt.substring(SecParams.PREFIX.length());
-            
-            try {
-                DecodedJWT decodedJWT = verifier.verify(jwt);
-                String username = decodedJWT.getSubject();
-                List<String> roles = decodedJWT.getClaims().get("roles").asList(String.class);
-                
-                Collection<GrantedAuthority> authorities = new ArrayList<>();
-                for (String r : roles) {
-                    authorities.add(new SimpleGrantedAuthority(r));
-                }
-                
-                UsernamePasswordAuthenticationToken authentication = 
-                    new UsernamePasswordAuthenticationToken(username, null, authorities);
-                    
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-                
-            } catch (JWTVerificationException e) {
-                logger.error("Token JWT invalide: {}", e.getMessage());
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return;
-            }
-            
-        } catch (Exception e) {
-            logger.error("Erreur lors du traitement du token JWT", e);
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            return;
-        }
-        
-        filterChain.doFilter(request, response);
-    }
+//            jwt = jwt.substring(SecParams.PREFIX.length());
+//            
+//            try {
+//                DecodedJWT decodedJWT = verifier.verify(jwt);
+//                String username = decodedJWT.getSubject();
+//                List<String> roles = decodedJWT.getClaims().get("roles").asList(String.class);
+//                
+//                Collection<GrantedAuthority> authorities = new ArrayList<>();
+//                for (String r : roles) {
+//                    authorities.add(new SimpleGrantedAuthority(r));
+//                }
+//                
+//                UsernamePasswordAuthenticationToken authentication = 
+//                    new UsernamePasswordAuthenticationToken(username, null, authorities);
+//                    
+//                SecurityContextHolder.getContext().setAuthentication(authentication);
+//                
+//            } catch (JWTVerificationException e) {
+//                logger.error("Token JWT invalide: {}", e.getMessage());
+//                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//                return;
+//            }
+//            
+//        } catch (Exception e) {
+//            logger.error("Erreur lors du traitement du token JWT", e);
+//            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+//            return;
+//        }
+//        
+//        filterChain.doFilter(request, response);
+//    }
 }
