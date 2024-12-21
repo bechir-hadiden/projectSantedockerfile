@@ -18,7 +18,7 @@
 
     <properties>
         <java.version>17</java.version>
-        <start-class>com.bechir.sante.ProjetSanteApplication</start-class>
+        <start-class>com.bechir.sante.ProjetsanteApplication</start-class>
     </properties>
 
     <dependencies>
